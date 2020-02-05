@@ -1,0 +1,8 @@
+# Each line represents the ranking of that choice
+# In following line, A is first choice, B second, C third, D fourth
+A B C D
+C B D A
+A B D C
+C A D B
+C B A D
+C A B D
