@@ -1,19 +1,26 @@
+import pytest
 import subprocess
 
 
-def test_run_script():
+@pytest.fixture
+def script_run():
+    """
+    Run script
+    """
+    return subprocess.run("python condorcet.py survey.txt", shell=True,
+                          capture_output=True, text=True)
+
+
+def test_run_script(script_run):
     """
     Script runs and has exit code 0
     """
-    return_code = subprocess.call("python condorcet.py survey.txt", shell=True)
-    assert return_code == 0, "Running script failed!"
+    assert script_run.returncode == 0, "Running script failed!"
 
 
-def test_results():
+def test_results(script_run):
     """
     Script runs and declares C the winner
     """
-    output = subprocess.run("python condorcet.py survey.txt", shell=True,
-                            capture_output=True, text=True)
-    result = output.stdout.split('\n')
+    result = script_run.stdout.split('\n')
     assert result[2] == "The winner is C.", "Script output wrong!"
